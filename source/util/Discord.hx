@@ -1,5 +1,6 @@
 package util;
 
+#if desktop
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
 import states.menus.MainMenuState;
@@ -100,3 +101,4 @@ class DiscordClient
 	}
 	#end
 }
+#end
