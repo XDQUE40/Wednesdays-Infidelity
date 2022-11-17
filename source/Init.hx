@@ -11,7 +11,7 @@ import states.MusicBeatState;
 import states.menus.StoryMenuState;
 import states.menus.TitleState;
 import util.CoolUtil;
-import util.Discord.DiscordClient;
+
 
 class Init extends FlxState
 {
