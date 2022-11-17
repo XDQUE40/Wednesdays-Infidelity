@@ -17,7 +17,6 @@ import android.flixel.FlxButton;
 import android.flixel.FlxHitbox;
 import android.flixel.FlxVirtualPad;
 #end
-
 #if (haxe >= "4.0.0")
 enum abstract Action(String) to String from String
 {
@@ -573,7 +572,12 @@ class Controls extends FlxActionSet
 		FlxG.inputs.add(actions);
 	}
 
-
+	/**
+	 * Calls a function passing each action bound by the specified control
+	 * @param control
+	 * @param func
+	 * @return ->Void)
+	 */
 	function forEachBound(control:Control, func:FlxActionDigital->FlxInputState->Void)
 	{
 		switch (control)
@@ -707,7 +711,7 @@ class Controls extends FlxActionSet
 		}
 	}
 
-#if !android
+	#if !android
 	public function bindKeys(control:Control, keys:Array<FlxKey>)
 	{
 		var copyKeys:Array<FlxKey> = keys.copy();
@@ -724,7 +728,7 @@ class Controls extends FlxActionSet
 		#end
 	}
 
-
+	
 	public function unbindKeys(control:Control, keys:Array<FlxKey>)
 	{
 		var copyKeys:Array<FlxKey> = keys.copy();
@@ -739,13 +743,6 @@ class Controls extends FlxActionSet
 		#else
 		forEachBound(control, function(action, _) removeKeys(action, copyKeys));
 		#end
-	}
-
-	inline static function addKeys(action:FlxActionDigital, keys:Array<FlxKey>, state:FlxInputState)
-	{
-		for (key in keys)
-			if (key != NONE)
-				action.addKey(key, state);
 	}
 
 	#else
@@ -768,7 +765,13 @@ class Controls extends FlxActionSet
 		#end
 	}	
 	#end			
-	
+	inline static function addKeys(action:FlxActionDigital, keys:Array<FlxKey>, state:FlxInputState)
+	{
+		for (key in keys)
+			if (key != NONE)
+				action.addKey(key, state);
+	}
+
 	static function removeKeys(action:FlxActionDigital, keys:Array<FlxKey>)
 	{
 		var i = action.inputs.length;
