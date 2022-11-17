@@ -14,9 +14,17 @@
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
+	<!--These window settings apply to all targets-->
 	<window width="1280" height="720" fps="" background="#000000" hardware="true" vsync="false" />
 
+	<!--HTML5-specific-->
+	<window if="html5" resizable="true" />
+
+	<!--Desktop-specific-->
 	<window orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
+
+	<!--Mobile-specific-->
+	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
 
 	<!-- ___________________ WEDNESDAY INFEDATLITLY SETTINGS ____________________ -->
 
@@ -39,6 +47,7 @@
 	
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 
+	<assets path="assets/android" if="android"/>
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
 
@@ -80,18 +89,19 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="hxp" />
 	<haxelib name="flxanimate" />
-	<haxelib name="discord_rpc"/>
-	<haxelib name="hxCodec"/>
-
+	<haxelib name="discord_rpc if="desktop"/>
+	<haxelib name="extension-webview"/>
+	
+					
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
-	<!--Disable the Flixel core focus lost screen-->
+		<!--Disable the Flixel core focus lost screen-->			 
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 
-	<error value="Targets besides desktop are not supported" unless="desktop" />
+	<error value="Targets besides desktop are not supported" unless="android" />
 
 	<haxedef name="no-deprecation-warnings" />
 
