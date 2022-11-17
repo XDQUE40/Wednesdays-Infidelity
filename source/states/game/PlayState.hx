@@ -1234,20 +1234,20 @@ class PlayState extends MusicBeatState
 	add(creditTxt);
 	
 	if (ClientPrefs.downScroll)
-		botplayTxt.y = timeBarBG.y - 78;
+		     botplayTxt.y = timeBarBG.y - 78;
 	}		
 		
+             if(ClientPrefs.downScroll) {
+		                   creditTxt.y = 148;
+             }	                  
 
-		if(ClientPrefs.downScroll) {
-                             creditTxt.y = 148;
 
-		}	
-			strumLineNotes.cameras = [camHUD];
+		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		creditTxt.cameras = [camHUD];
-	healthBarBG.cameras = [camHUD];
+	  healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		weekMissesBar.cameras = [camHUD];
@@ -1256,9 +1256,9 @@ class PlayState extends MusicBeatState
 		cutsceneText.cameras = [camOther];
 
 		#if android
-	addAndroidControls();
-	androidControls.visible = true;			
-	#end
+  	addAndroidControls();
+	  androidControls.visible = true;			
+   	#end
 	
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
