@@ -63,15 +63,13 @@ class FlxVideo extends FlxBasic
 		});
 		netStream.play(name);
 		#elseif desktop
-		var video:MP4Handler = new MP4Handler(focus);
-		video.playVideo(name);
+		var video:MP4Handler = new MP4Handler(name);
 		video.finishCallback = onVLCComplete;
-		video.onError = onVLCError;
-		video.skipable = skipable;
+		video.canSkip = skipable;
 		#end
 	}
 
-	#if desktop
+	#if android 
 	function checkFile(fileName:String):String
 	{
 		var pDir = "";
@@ -95,14 +93,6 @@ class FlxVideo extends FlxBasic
 		destroy();
 	}
 
-	function onVLCError()
-	{
-		trace("An error has occured while trying to load the video.\nPlease, check if the file you're loading exists.");
-		if (finishCallback != null)
-		{
-			finishCallback();
-		}
-	}
 	#end
 	#end
 }
