@@ -30,7 +30,7 @@ class ClientPrefs
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
-	public static var controllerMode:Bool = false;
+	public static var controllerMode:Bool = true;
 	public static var hitsoundVolume:Float = 0;
 	public static var pauseMusic:String = 'Tea Time';
 	public static var botPlay:Bool = false;
@@ -40,8 +40,8 @@ class ClientPrefs
 	public static var goodWindow:Int = 90;
 	public static var badWindow:Int = 135;
 	public static var safeFrames:Float = 10;
-	public static var shaders:Bool = true;
-	public static var intensiveShaders:Bool = true;
+	public static var shaders:Bool = false;
+	public static var intensiveShaders:Bool = false;
 	public static var doNotShowWarnings:Bool = false;
 	public static var hudStyle:String = "Box Funkin";
 	public static var nubMode:Bool = false;
