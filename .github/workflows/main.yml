@@ -56,7 +56,7 @@ jobs:
           haxelib install flixel-ui
           haxelib install hscript
           haxelib install flixel-addons
-          
+          haxelib git hxp https://github.com/openfl/hxp
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib git extension-webview https://github.com/Daninnocent/extension-webview
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
