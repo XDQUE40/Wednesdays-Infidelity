@@ -141,7 +141,7 @@ class CreditsState extends MusicBeatState
 			],
 			[
 				"iKenny",
-				'Kenny',
+				'iKenny',
 				'Carnival in Toyland Musician',
 				'https://twitter.com/KennyL_UwU',
 				"7d5327"
@@ -302,6 +302,11 @@ class CreditsState extends MusicBeatState
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
 		changeSelection();
+		
+    #if android
+		addVirtualPad(UP_DOWN, A_B);
+		#end
+		
 		super.create();
 	}
 
