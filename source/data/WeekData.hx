@@ -143,7 +143,7 @@ class WeekData
 				}
 
 				var list = Assets.list();
-				var internalEvents:Array<String> = list.filter(text -> text.contains('assets/events'));
+				var internalEvents:Array<String> = list.filter(text -> text.contains('assets/data'));
 				{
 					var path = haxe.io.Path.join([directory, file]);
 					if (!Assets.isDirectory(path) && file.endsWith('.json'))
