@@ -1226,15 +1226,16 @@ class PlayState extends MusicBeatState
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
-	if (ClientPrefs.downScroll)
-		     botplayTxt.y = timeBarBG.y - 78;
-	}		
-		
+		if (ClientPrefs.downScroll)
+		{
+			botplayTxt.y = timeBarBG.y - 78;
+		}
+
 		strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
-	  healthBarBG.cameras = [camHUD];
+		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		weekMissesBar.cameras = [camHUD];
@@ -1242,11 +1243,11 @@ class PlayState extends MusicBeatState
 		botplayTxt.cameras = [camHUD];
 		cutsceneText.cameras = [camOther];
 
-		#if android
+	 #if android
   	addAndroidControls();
 	  androidControls.visible = true;			
    	#end
-	
+		
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
