@@ -1,131 +1,71 @@
 package vlc;
 
+import flixel.text.FlxText;
+// import flixel.FlxState;
 import flixel.FlxG;
-import openfl.events.Event;
-import vlc.bitmap.VlcBitmap;
+// import flixel.FlxSubState;
+import flixel.FlxBasic;
 
-/**
- * Play a video using cpp.
- * Use bitmap to connect to a graphic or use `MP4Sprite`.
- */
-class MP4Handler extends VlcBitmap
+import extension.webview.WebView;
+
+using StringTools;
+
+class MP4Handler extends FlxBasic
 {
-	public var readyCallback:Void->Void;
-	public var finishCallback:Void->Void;
+	public static var androidPath:String = 'file:///android_asset/';
 
-	public var skipable:Bool = false;
-	public var focus:Bool = true;
+	public static var source1:String = 'assets/videos/';
 
-	var pauseMusic:Bool;
+	// public var nextState:FlxState;
+	
+	public var canSkip:Bool = true;
 
-	public function new(daFocus:Null<Bool> = true, width:Float = 320, height:Float = 240, autoScale:Bool = true)
+    public var finishCallback:Void->Void = null;
+
+	public function new(source:String)
 	{
-		super(width, height, autoScale);
+		super();
 
-		onVideoReady = onVLCVideoReady;
-		onComplete = finishVideo;
-		onError = onVLCError;
+		// text = new FlxText(0, 0, 0, "Video Exited! Tap to Continue", 48);
+		// text.screenCenter();
+		// text.alpha = 0;
+		// add(text);
 
-		FlxG.addChildBelowMouse(this);
+		// will fix later -Daninnocent
 
-		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
+		// nextState = toTrans;
 
-		if (daFocus != null)
-			focus = daFocus;
+		//FlxG.autoPause = false;
 
-		FlxG.signals.focusGained.add(function()
+		WebView.onClose=onClose;
+		WebView.onURLChanging=onURLChanging;
+
+		WebView.open(androidPath + source1 + source + '.html', false, null, ['http://exitme(.*)']);
+	}
+
+	public override function update(dt:Float) {
+		for (touch in FlxG.touches.list)
+			if (touch.justReleased && canSkip)
+				if(finishCallback != null) finishCallback();
+
+                if(FlxG.android.justReleased.BACK)
+                {
+                   if(finishCallback != null) finishCallback();
+                }
+
+		super.update(dt);	
+	}
+
+	function onClose(){// not working
+	 	trace('video closed lmao');
+		if (finishCallback != null)
 		{
-			if (focus)
-				resume();
-		});
-		FlxG.signals.focusLost.add(function()
-		{
-			if (focus)
-				pause();
-		});
-	}
-
-	function update(e:Event)
-	{
-		if (skipable && ((FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE) && isPlaying))
-			finishVideo();
-
-		if (FlxG.sound.muted || FlxG.sound.volume <= 0)
-			volume = 0;
-		else
-			volume = FlxG.sound.volume + 0.4;
-	}
-
-	#if sys
-	function checkFile(fileName:String):String
-	{
-		#if !android
-		var pDir = "";
-		var appDir = "file:///" + Sys.getCwd() + "/";
-
-		if (fileName.indexOf(":") == -1) // Not a path
-			pDir = appDir;
-		else if (fileName.indexOf("file://") == -1 || fileName.indexOf("http") == -1) // C:, D: etc? ..missing "file:///" ?
-			pDir = "file:///";
-
-		return pDir + fileName;
-		#else
-		return "file://" + fileName;
-		#end
-	}
-	#end
-
-	function onVLCVideoReady()
-	{
-		trace("Video loaded!");
-
-		if (readyCallback != null)
-			readyCallback();
-	}
-
-	function onVLCError()
-	{
-		// TODO: Catch the error
-		throw "VLC caught an error!";
-	}
-
-	public function finishVideo()
-	{
-		if (FlxG.sound.music != null && pauseMusic)
-			FlxG.sound.music.resume();
-
-		FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
-
-		dispose();
-
-		if (FlxG.game.contains(this))
-		{
-			FlxG.game.removeChild(this);
-
-			if (finishCallback != null)
-				finishCallback();
+			finishCallback();
 		}
-	}
+	 }
 
-	/**
-	 * Native video support for Flixel & OpenFL
-	 * @param path Example: `your/video/here.mp4`
-	 * @param repeat Repeat the video.
-	 * @param pauseMusic Pause music until done video.
-	 */
-	public function playVideo(path:String, ?repeat:Bool = false, pauseMusic:Bool = false)
-	{
-		this.pauseMusic = pauseMusic;
-
-		if (FlxG.sound.music != null && pauseMusic)
-			FlxG.sound.music.pause();
-
-		#if sys
-		play(checkFile(path));
-
-		this.repeat = repeat ? -1 : 0;
-		#else
-		throw "Doesn't support sys";
-		#end
+	function onURLChanging(url:String) {
+		if (url == 'http://exitme/') if(finishCallback != null) finishCallback(); // drity hack lol
+		trace("WebView is about to open: "+url);
 	}
 }
