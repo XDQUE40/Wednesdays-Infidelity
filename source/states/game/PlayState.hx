@@ -1226,16 +1226,28 @@ class PlayState extends MusicBeatState
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
-		if (ClientPrefs.downScroll)
-		{
-			botplayTxt.y = timeBarBG.y - 78;
-		}
+		
+	var creditTxt = new FlxText(876, 648, 348);
+	creditTxt.text = "PORTED BY\nDanizin";
+	 creditTxt.setFormat(Paths.font("vcr.ttf"), 30, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+	creditTxt.scrollFactor.set();
+	add(creditTxt);
+	
+	if (ClientPrefs.downScroll)
+		botplayTxt.y = timeBarBG.y - 78;
+	}		
+		
 
-		strumLineNotes.cameras = [camHUD];
+		if(ClientPrefs.downScroll) {
+                             creditTxt.y = 148;
+
+		}	
+			strumLineNotes.cameras = [camHUD];
 		grpNoteSplashes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
-		healthBarBG.cameras = [camHUD];
+		creditTxt.cameras = [camHUD];
+	healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		weekMissesBar.cameras = [camHUD];
@@ -1243,6 +1255,11 @@ class PlayState extends MusicBeatState
 		botplayTxt.cameras = [camHUD];
 		cutsceneText.cameras = [camOther];
 
+		#if android
+	addAndroidControls();
+	androidControls.visible = true;			
+	#end
+	
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
@@ -1896,7 +1913,7 @@ class PlayState extends MusicBeatState
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
 		#if sys
-		if (FileSystem.exists(file))
+		if (Assets.exists(file))
 		{
 		#else
 		if (OpenFlAssets.exists(file))
