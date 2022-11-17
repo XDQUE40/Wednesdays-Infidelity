@@ -91,7 +91,7 @@
 	<haxelib name="flixel-addons" />
 	<haxelib name="hscript" />
 	<haxelib name="flixel-ui" />
-	
+	<haxelib name="hxp" />
 	<haxelib name="flxanimate" />
 	<haxelib name="discord_rpc" if="desktop" />
 	<haxelib name="extension-webview"/>
