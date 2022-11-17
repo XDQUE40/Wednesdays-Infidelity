@@ -12,7 +12,7 @@ import states.MusicBeatState;
 
 #if windows
 @:headerCode("#include <windows.h>")
-#elseif linux
+#elseif android
 @:headerCode("#include <stdio.h>")
 #end
 class SpecsDetector extends MusicBeatState
@@ -41,7 +41,7 @@ class SpecsDetector extends MusicBeatState
 		else
 		{
 			return messageBox("Wednesday's Infidelity",
-				"Your PC does not meet the requirements Wednesday's Infidelity has.\nWhile you can still play the mod, you may experience framedrops and/or lag spikes.\n\nDo you want to play anyway?");
+				"Your cell  does not meet the requirements Wednesday's Infidelity has.\nWhile you can still play the mod, you may experience framedrops and/or lag spikes.\n\nDo you want to play anyway?");
 		}
 
 		return true;
