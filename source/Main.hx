@@ -137,7 +137,7 @@ class Main extends Sprite
 		{
 			fpsVar.visible = false;
 		}
-		#end
+		
 
 		#if html5
 		FlxG.autoPause = false;
