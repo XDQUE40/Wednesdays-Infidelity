@@ -230,8 +230,8 @@ class Paths
 	static public function getTextFromFile(key:String):String
 	{
 		#if sys
-		if (FileSystem.exists(getPreloadPath(key)))
-			return File.getContent(getPreloadPath(key));
+		if (Assets.exists(getPreloadPath(key)))
+			return Assets.getText(getPreloadPath(key));
 
 		if (currentLevel != null)
 		{
@@ -239,13 +239,13 @@ class Paths
 			if (currentLevel != 'shared')
 			{
 				levelPath = getLibraryPathForce(key, currentLevel);
-				if (FileSystem.exists(levelPath))
-					return File.getContent(levelPath);
+				if (Assets.exists(levelPath))
+					return Assets.getText(levelPath);
 			}
 
 			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(levelPath))
-				return File.getContent(levelPath);
+			if (Assets.exists(levelPath))
+				return Assets.getText(levelPath);
 		}
 		#end
 		return Assets.getText(getPath(key, TEXT));
@@ -316,7 +316,7 @@ class Paths
 	public static function returnSound(path:String, key:String, ?library:String)
 	{
 		var file = null;
-		if (FileSystem.exists(file))
+		if (Assets.exists(file))
 		{
 			if (!currentTrackedSounds.exists(file))
 			{
@@ -331,7 +331,7 @@ class Paths
 		gottenPath = gottenPath.substring(gottenPath.indexOf(':') + 1, gottenPath.length);
 		// trace(gottenPath);
 		if (!currentTrackedSounds.exists(gottenPath))
-			currentTrackedSounds.set(gottenPath, Sound.fromFile('./' + gottenPath));
+			currentTrackedSounds.set(gottenPath, Sound.fromFile(gottenPath));
 		// #else
 		// currentTrackedSounds.set(gottenPath, OpenFlAssets.getSound(getPath('$path/$key.$SOUND_EXT', SOUND, library)));
 		// #end
