@@ -107,7 +107,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
     #if android
-		addVirtualPad(UP_DOWN, A_B_C);
+		addVirtualPad(UP_DOWN, A_B);
     #end
 	
 		super.create();
@@ -144,14 +144,7 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-#if android
-		if (virtualPad.buttonC.justPressed) {
-			#if android
-			removeVirtualPad();
-			#end
-			MusicBeatState.switchState(new android.AndroidControlsSubState());
-		}
-		#end
+
 
 		if (controls.ACCEPT)
 		{
