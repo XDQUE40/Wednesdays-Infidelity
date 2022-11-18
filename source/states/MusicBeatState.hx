@@ -66,7 +66,7 @@ class MusicBeatState extends FlxUIState
 			remove(virtualPad);
 	}
 
-	public function addAndroidControls(Modes)
+	public function addAndroidControls()
 	{
 		
 		androidControls = new AndroidControls(mode);
