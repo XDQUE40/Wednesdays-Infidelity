@@ -10,7 +10,6 @@ import song.Conductor.BPMChangeEvent;
 import song.Conductor;
 #if android
 import android.flixel.FlxVirtualPad;
-import flixel.FlxCamera;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
@@ -50,7 +49,7 @@ class MusicBeatSubstate extends FlxSubState
 	public function removeVirtualPad()
 	{
 		if (trackedinputsUI != [])
-			controls.removeAControlsInput(trackedinputsUI);
+			controls.removeFlxInput(trackedinputsUI);
 
 		if (virtualPad != null)
 			remove(virtualPad);
@@ -60,7 +59,7 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		if (virtualPad != null)
 		{
-			var camControls:FlxCamera = new FlxCamera();
+			var camControls = new flixel.FlxCamera();
 			FlxG.cameras.add(camControls);
 			camControls.bgColor.alpha = 0;
 			virtualPad.cameras = [camControls];
@@ -72,7 +71,7 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		#if android
 		if (trackedinputsUI != [])
-			controls.removeAControlsInput(trackedinputsUI);
+			controls.removeFlxInput(trackedinputsUI);
 		#end
 
 		super.destroy();
