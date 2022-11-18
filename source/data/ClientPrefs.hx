@@ -40,7 +40,7 @@ class ClientPrefs
 	public static var goodWindow:Int = 90;
 	public static var badWindow:Int = 135;
 	public static var safeFrames:Float = 10;
-	public static var shaders:Bool = false;
+	public static var shaders:Bool = true;
 	public static var intensiveShaders:Bool = false;
 	public static var doNotShowWarnings:Bool = false;
 	public static var hudStyle:String = "Box Funkin";
