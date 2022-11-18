@@ -61,6 +61,9 @@ import states.substates.PauseSubState;
 import util.*;
 import util.CoolUtil;
 import util.Shaders;
+#if android
+import android.flixel.FlxVirtualPad;
+#end
 
 using StringTools;
 
@@ -1246,7 +1249,10 @@ class PlayState extends MusicBeatState
 	 #if android
   	addAndroidControls();
 	  androidControls.visible = true;			
-   	#end
+   	_vpad = new FlxVirtualPad(NONE, A);
+	   _vpad.cameras = [camHUD];
+			this.add(_vpad);
+        #end
 		
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2359,7 +2365,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) && !_onCoolDown && !cpuControlled && !dodging && !paused)
+		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) || _vpad.buttonA.justPressed && !_onCoolDown && !cpuControlled && !dodging && !paused)
 		{
 			_onCoolDown = true;
 			dodging = true;
