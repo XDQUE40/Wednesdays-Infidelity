@@ -1244,21 +1244,9 @@ class PlayState extends MusicBeatState
 		cutsceneText.cameras = [camOther];
 
 	 #if android
-if (SONG.dodgeEnabled)
-		{
-			if (ClientPrefs.tauntHitbox && !inhumanSong)
-				addAndroidControls(DOUBLE);
-			else
-				addAndroidControls(DODGE);
-		}
-		else
-		{
-			if (ClientPrefs.tauntHitbox && !inhumanSong)
-				addAndroidControls(TAUNT);
-			else
-				addAndroidControls(DEFAULT);
-		}
-		#end
+  	addAndroidControls();
+	  androidControls.visible = true;			
+   	#end
 		
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2371,7 +2359,7 @@ if (SONG.dodgeEnabled)
 			}
 		}
 
-		if ((doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKey) #if android || androidControls.hitbox.buttonDodge.justPressed #end))
+		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) && !_onCoolDown && !cpuControlled && !dodging && !paused)
 		{
 			_onCoolDown = true;
 			dodging = true;
