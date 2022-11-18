@@ -499,7 +499,7 @@ class Controls extends FlxActionSet
 		}
 	}
 
-	public function removeAControlsInput(Tinputs:Array<FlxActionInput>)
+	public function removeFlxInput(Tinputs:Array<FlxActionInput>)
 	{
 		for (action in this.digitalActions)
 		{
@@ -516,8 +516,6 @@ class Controls extends FlxActionSet
 		}
 	}
 	#end			
-	
-	
 	override function update()
 	{
 		super.update();
