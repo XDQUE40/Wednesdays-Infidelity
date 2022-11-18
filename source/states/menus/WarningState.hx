@@ -332,7 +332,7 @@ class WarningState extends MusicBeatState
 				reloadCheckboxes();
 			}
 
-			if ((FlxG.keys.justPressed.SPACE || virtualPad.buttonA.justPressed && canPressSpace)
+			if (FlxG.keys.justPressed.SPACE || virtualPad.buttonA.justPressed && canPressSpace)
 			{
 				canMove = false;
 
