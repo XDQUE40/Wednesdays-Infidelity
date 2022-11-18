@@ -2371,7 +2371,7 @@ if (SONG.dodgeEnabled)
 			}
 		}
 
-		if ((doingDodge && canDodge && FlxG.keys.anyJustPressed.anyJustPressed(dodgeKey) #if android || androidControls.hitbox.buttonDodge.justPressed #end))
+		if ((doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKey) #if android || androidControls.hitbox.buttonDodge.justPressed #end))
 		{
 			_onCoolDown = true;
 			dodging = true;
