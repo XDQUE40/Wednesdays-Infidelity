@@ -3,6 +3,9 @@ package states.game;
 import data.*;
 import data.ClientPrefs;
 import data.Highscore;
+#if android
+import android.flixel.FlxVirtualPad;
+#end	
 import data.Section.SwagSection;
 import data.Song.SwagSong;
 import data.StageData;
@@ -61,9 +64,9 @@ import states.substates.PauseSubState;
 import util.*;
 import util.CoolUtil;
 import util.Shaders;
-#if android
-import android.flixel.FlxVirtualPad;
-#end
+
+
+
 
 using StringTools;
 
