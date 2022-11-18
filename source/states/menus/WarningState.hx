@@ -324,7 +324,7 @@ class WarningState extends MusicBeatState
 			if (controls.UI_DOWN_P)
 				changeSelection(1);
 
-			if (FlxG.keys.justPressed.ENTER || controls.ACCEPT)
+			if (FlxG.keys.justPressed.ENTER || virtualPad.buttonB.justPressed)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				curOption.setValue((curOption.getValue() == true) ? false : true);
@@ -332,7 +332,7 @@ class WarningState extends MusicBeatState
 				reloadCheckboxes();
 			}
 
-			if ((FlxG.keys.justPressed.SPACE || controls.BACK) && canPressSpace)
+			if ((FlxG.keys.justPressed.SPACE || virtualPad.buttonA.justPressed && canPressSpace)
 			{
 				canMove = false;
 
