@@ -137,6 +137,61 @@ class FreeplaySelectorState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			
+				for (touch in FlxG.touches.list) {
+				if (touch.justPressed) {
+					menuItems.forEach(function(spr1:FlxSprite)
+					{
+						if (touch.overlaps(spr1) && touch.justPressed) {
+							if (curSelected == spr1.ID) { // (sirox) this is bad way to do this, but at least, it's working
+								selectedSomethin = true;
+								FlxG.sound.play(Paths.sound('confirmMenu'));
+
+								menuItems.forEach(function(spr:FlxSprite)
+								{
+									if (curSelected != spr.ID)
+									{
+										FlxTween.tween(spr, {alpha: 0}, 0.4, {
+											ease: FlxEase.quadOut,
+											onComplete: function(twn:FlxTween)
+											{
+												spr.kill();
+											}
+										});
+									}
+									else
+									{
+										FlxTween.tween(FlxG.camera, {zoom: 2.1}, 2, {ease: FlxEase.expoInOut});
+										if (ClientPrefs.shake)
+											FlxG.camera.shake(0.008, 0.08);
+
+										if (ClientPrefs.flashing)
+										{
+											FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+											{
+												MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+											});
+										}
+										else
+										{
+											new FlxTimer().start(1, function(tmr:FlxTimer)
+											{
+												MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+											});
+										}
+									}
+								});
+							}
+						}
+					});
+				}
+			}
+
+			if (FlxG.android.justReleased.BACK) {
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				MusicBeatState.switchState(new MainMenuState());
+			}
+			
 			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
