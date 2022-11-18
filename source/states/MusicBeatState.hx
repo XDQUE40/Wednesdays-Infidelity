@@ -21,10 +21,8 @@ import util.CoolUtil;
 import util.CustomFadeTransition;
 #if android
 import android.AndroidControls;
-import flixel.FlxCamera;
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
-import android.flixel.FlxHitbox.Modes;
 import flixel.util.FlxDestroyUtil;
 #end
 
@@ -60,7 +58,7 @@ class MusicBeatState extends FlxUIState
 	public function removeVirtualPad()
 	{
 		if (trackedinputsUI != [])
-			controls.removeAControlsInput(trackedinputsUI);
+			controls.removeFlxInput(trackedinputsUI);
 
 		if (virtualPad != null)
 			remove(virtualPad);
@@ -68,11 +66,19 @@ class MusicBeatState extends FlxUIState
 
 	public function addAndroidControls()
 	{
-		
-		androidControls = new AndroidControls(mode);
+		androidControls = new AndroidControls();
 
-		controls.setHitBox(androidControls.hitbox);
-		
+		switch (AndroidControls.getMode())
+		{
+			case 0 | 1 | 2: // RIGHT_FULL | LEFT_FULL | CUSTOM
+				controls.setVirtualPadNOTES(androidControls.virtualPad, RIGHT_FULL, NONE);
+			case 3: // BOTH_FULL
+				controls.setVirtualPadNOTES(androidControls.virtualPad, BOTH_FULL, NONE);
+			case 4: // HITBOX
+				controls.setHitBox(androidControls.hitbox);
+			case 5: // KEYBOARD
+		}
+
 		trackedinputsNOTES = controls.trackedinputsNOTES;
 		controls.trackedinputsNOTES = [];
 
@@ -98,8 +104,7 @@ class MusicBeatState extends FlxUIState
 	{
 		if (virtualPad != null)
 		{
-			var camControls = new FlxCamera();
-			var camControls:FlxCamera = new FlxCamera();
+			var camControls = new flixel.FlxCamera();
 			FlxG.cameras.add(camControls);
 			camControls.bgColor.alpha = 0;
 			virtualPad.cameras = [camControls];
@@ -111,10 +116,10 @@ class MusicBeatState extends FlxUIState
 	{
 		#if android
 		if (trackedinputsNOTES != [])
-			controls.removeAControlsInput(trackedinputsNOTES);
+			controls.removeFlxInput(trackedinputsNOTES);
 
 		if (trackedinputsUI != [])
-			controls.removeAControlsInput(trackedinputsUI);
+			controls.removeFlxInput(trackedinputsUI);
 		#end
 
 		super.destroy();
