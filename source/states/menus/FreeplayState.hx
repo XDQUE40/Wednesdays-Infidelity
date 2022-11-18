@@ -233,7 +233,7 @@ class FreeplayState extends MusicBeatState
 		add(textBG);
 
 		#if PRELOAD_ALL
-		var leText:String = "Press SPACE to listen to the Song";
+		var leText:String = "Press C to listen to the Song";
 		var size:Int = 16;
 		#else
 		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
@@ -255,11 +255,11 @@ class FreeplayState extends MusicBeatState
 		daStatic.animation.addByPrefix('static', 'staticFLASH', 24, true);
 		add(daStatic);
 		daStatic.animation.play('static');
-
-		#if android
-		addVirtualPad(LEFT_FULL, A_B);
-		#end
 		
+		    #if android 
+        addVirtualPad(UP_DOWN, A_B_C);
+        #end
+
 		super.create();
 	}
 
@@ -377,11 +377,11 @@ class FreeplayState extends MusicBeatState
 			var upP = controls.UI_UP_P;
 			var downP = controls.UI_DOWN_P;
 			var accepted = controls.ACCEPT;
-			var space = FlxG.keys.justPressed.SPACE;
+			var space = FlxG.keys.justPressed.SPACE || _virtualpad.buttonC.justPressed;
 			var ctrl = FlxG.keys.justPressed.CONTROL;
 
 			var shiftMult:Int = 1;
-			if (FlxG.keys.pressed.SHIFT)
+			if (FlxG.keys.pressed.SHIFT || controls.RESET)
 				shiftMult = 3;
 
 			if (songs.length > 1)
