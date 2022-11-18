@@ -1245,9 +1245,13 @@ class PlayState extends MusicBeatState
 
 	 #if android
   	addAndroidControls();
-	  androidControls.visible = true;			
-   	#end
-		
+	       androidControls.visible = true;			
+   	
+		_vpad = new FlxVirtualPad(NONE, A);
+		_vpad.cameras = [camHUD];
+	this.add(_vpad);
+	#end
+	
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
@@ -2359,7 +2363,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) && !_onCoolDown && !cpuControlled && !dodging && !paused)
+		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) #if android || _vpad.buttonA.justPressed #end)
 		{
 			_onCoolDown = true;
 			dodging = true;
