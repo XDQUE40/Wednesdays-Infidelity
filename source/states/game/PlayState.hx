@@ -1244,9 +1244,21 @@ class PlayState extends MusicBeatState
 		cutsceneText.cameras = [camOther];
 
 	 #if android
-  	addAndroidControls();
-	  androidControls.visible = true;			
-   	#end
+if (SONG.dodgeEnabled)
+		{
+			if (ClientPrefs.tauntHitbox && !inhumanSong)
+				addAndroidControls(DOUBLE);
+			else
+				addAndroidControls(DODGE);
+		}
+		else
+		{
+			if (ClientPrefs.tauntHitbox && !inhumanSong)
+				addAndroidControls(TAUNT);
+			else
+				addAndroidControls(DEFAULT);
+		}
+		#end
 		
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -2359,7 +2371,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (doingDodge && canDodge && FlxG.keys.anyJustPressed(dodgeKeys) && !_onCoolDown && !cpuControlled && !dodging && !paused)
+		if (doingDodge && canDodge && androidControls.hitbox.buttonDodge .anyJustPressed(dodgeKey) #if android && !_onCoolDown && !cpuControlled && !dodging && !paused)
 		{
 			_onCoolDown = true;
 			dodging = true;
