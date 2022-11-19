@@ -3,13 +3,12 @@ package android;
 import android.flixel.FlxHitbox;
 import android.flixel.FlxVirtualPad;
 import flixel.FlxG;
-import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxPoint;
+import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxDestroyUtil;
 
-/**
- * @author Mihai Alexandru (M.A. Jigsaw)
- */
+using StringTools;
+
 class AndroidControls extends FlxSpriteGroup
 {
 	public var virtualPad:FlxVirtualPad;
@@ -21,22 +20,40 @@ class AndroidControls extends FlxSpriteGroup
 
 		switch (AndroidControls.getMode())
 		{
-			case 'Pad-Right':
+			case 0: // RIGHT_FULL
+				initControler(0);
+			case 1: // LEFT_FULL
+				initControler(1);
+			case 2: // CUSTOM
+				initControler(2);
+			case 3: // BOTH_FULL
+				initControler(3);
+			case 4: // HITBOX
+				initControler(4);
+			case 5: // KEYBOARD
+		}
+	}
+
+	private function initControler(virtualPadMode:Int = 0):Void
+	{
+		switch (virtualPadMode)
+		{
+			case 0:
 				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
 				add(virtualPad);
-			case 'Pad-Left':
+			case 1:
 				virtualPad = new FlxVirtualPad(LEFT_FULL, NONE);
 				add(virtualPad);
-			case 'Pad-Custom':
-				virtualPad = AndroidControls.getCustomMode(new FlxVirtualPad(RIGHT_FULL, NONE));
+			case 2:
+				virtualPad = new FlxVirtualPad(RIGHT_FULL, NONE);
+				virtualPad = AndroidControls.getCustom(virtualPad);
 				add(virtualPad);
-			case 'Pad-Duo':
+			case 3:
 				virtualPad = new FlxVirtualPad(BOTH_FULL, NONE);
 				add(virtualPad);
-			case 'Hitbox':
+			case 4:
 				hitbox = new FlxHitbox();
 				add(hitbox);
-			case 'Keyboard': // do nothing
 		}
 	}
 
@@ -57,62 +74,21 @@ class AndroidControls extends FlxSpriteGroup
 		}
 	}
 
-	public static function setOpacity(opacity:Float, isHitbox:Bool = false):Void
+	public static function setMode(mode:Int = 0)
 	{
-		if (!isHitbox)
-		{
-			FlxG.save.data.virtualPadOpacity = opacity;
-			FlxG.save.flush();
-		}
-		else
-		{
-			FlxG.save.data.hitboxOpacity = opacity;
-			FlxG.save.flush();
-		}
-	}
-
-	public static function getOpacity(isHitbox:Bool = false):Float
-	{
-		if (!isHitbox)
-		{
-			if (FlxG.save.data.virtualPadOpacity == null)
-			{
-				FlxG.save.data.virtualPadOpacity = 0.6;
-				FlxG.save.flush();
-			}
-
-			return FlxG.save.data.virtualPadOpacity;
-		}
-		else
-		{
-			if (FlxG.save.data.hitboxOpacity == null)
-			{
-				FlxG.save.data.hitboxOpacity = 0.2;
-				FlxG.save.flush();
-			}
-
-			return FlxG.save.data.hitboxOpacity;
-		}
-	}
-
-	public static function setMode(mode:String = 'Pad-Right'):Void
-	{
-		FlxG.save.data.controlsMode = mode;
+		FlxG.save.data.buttonsmode = mode;
 		FlxG.save.flush();
 	}
 
-	public static function getMode():String
+	public static function getMode():Int
 	{
-		if (FlxG.save.data.controlsMode == null)
-		{
-			FlxG.save.data.controlsMode = 'Pad-Right';
-			FlxG.save.flush();
-		}
+		if (FlxG.save.data.buttonsmode != null)
+			return FlxG.save.data.buttonsmode;
 
-		return FlxG.save.data.controlsMode;
+		return 0;
 	}
 
-	public static function setCustomMode(virtualPad:FlxVirtualPad):Void
+	public static function setCustom(virtualPad:FlxVirtualPad)
 	{
 		if (FlxG.save.data.buttons == null)
 		{
@@ -123,6 +99,7 @@ class AndroidControls extends FlxSpriteGroup
 		else
 		{
 			var tempCount:Int = 0;
+
 			for (buttons in virtualPad)
 			{
 				FlxG.save.data.buttons[tempCount] = FlxPoint.get(buttons.x, buttons.y);
@@ -133,12 +110,13 @@ class AndroidControls extends FlxSpriteGroup
 		FlxG.save.flush();
 	}
 
-	public static function getCustomMode(virtualPad:FlxVirtualPad):FlxVirtualPad
+	public static function getCustom(virtualPad:FlxVirtualPad):FlxVirtualPad
 	{
+		var tempCount:Int = 0;
+
 		if (FlxG.save.data.buttons == null)
 			return virtualPad;
 
-		var tempCount:Int = 0;
 		for (buttons in virtualPad)
 		{
 			buttons.x = FlxG.save.data.buttons[tempCount].x;
