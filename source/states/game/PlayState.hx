@@ -282,6 +282,8 @@ class PlayState extends MusicBeatState
 
 	var stageWhite:FlxSprite;
 
+	var _vpad:FlxVirtualPad;
+	
 	//  Sus
 	var theamonguslys:FlxSprite;
 	var leansus:FlxSprite;
