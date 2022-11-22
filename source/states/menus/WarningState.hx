@@ -49,7 +49,11 @@ class WarningState extends MusicBeatState
 
 	override function create()
 	{
-		super.create();
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end	
+		
+			super.create();
 
 		if (ClientPrefs.doNotShowWarnings)
 		{
