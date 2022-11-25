@@ -60,6 +60,7 @@ jobs:
           haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
           haxelib git extension-webview https://github.com/Daninnocent/extension-webview
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib git flixel-addons https://github.com/ninjamuffin99/flixel-addons
           haxelib list
 
       - name: Create Version Tag
