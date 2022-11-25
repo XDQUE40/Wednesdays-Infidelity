@@ -113,16 +113,17 @@ class FreeplaySelectorState extends MusicBeatState
 			FlxG.camera.shake(0.001, 99999999999);
 
 		changeItem();
+		
+		#if mobileC
+        addVirtualPad(UP_DOWN, A_B);
+        #end
 
-		#if android
-	// addVirtualPad(UP_DOWN, A_B);
-    #end
 		super.create();
 	}
 
 	var selectedSomethin:Bool = false;
-  var a:Bool = false;
-	
+	var a:Bool = true;
+
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music != null)
@@ -138,35 +139,56 @@ class FreeplaySelectorState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			
-			a = false;
-			for (touch in FlxG.touches.list) {
-				if (touch.pressed && !a) {
-					a = true;
-					continue;
-				}
-				if (touch.pressed && a && !FlxG.stage.window.textInputEnabled) {
-					FlxG.stage.window.textInputEnabled = true;
-				    FlxG.stage.window.onTextInput.add(codeFunc);
-				}
-			}
+			/*for (touch in FlxG.touches.list) {
+						if (!touch.overlaps(hitbox) && touch.justPressed) {
+								selectedSomethin = true;
+								FlxG.sound.play(Paths.sound('confirmMenu'));
 
-		
+								menuItems.forEach(function(spr:FlxSprite)
+								{
+									if (curSelected != spr.ID)
+									{
+										FlxTween.tween(spr, {alpha: 0}, 0.4, {
+											ease: FlxEase.quadOut,
+											onComplete: function(twn:FlxTween)
+											{
+												spr.kill();
+											}
+										});
+									}
+									else
+									{
+										FlxTween.tween(FlxG.camera, {zoom: 2.1}, 2, {ease: FlxEase.expoInOut});
+										if (ClientPrefs.shake)
+											FlxG.camera.shake(0.008, 0.08);
+
+										if (ClientPrefs.flashing)
+										{
+											FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+											{
+												MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+											});
+										}
+										else
+										{
+											new FlxTimer().start(1, function(tmr:FlxTimer)
+											{
+												MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+											});
+										}
+									}
+								});
+						} else if (touch.overlaps(hitbox) && touch.justPressed) {
+							FlxG.sound.play(Paths.sound('scrollMenu'));
+							changeItem(1);
+						}
+			}*/ // FUCK THIS, I'M TIRED
 			
-			if (controls.UI_UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-1);
-			}
-			if (controls.BACK)
-			{
-				if (FlxG.android.justReleased.BACK) {
+			/*if (FlxG.android.justReleased.BACK) {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
-			}
-
+			}*/
 			
-
 			for (touch in FlxG.touches.list) {
 				if (controls.UI_UP_P || (touch.overlaps(_virtualpad.buttonUp) && touch.justPressed))
 				{
@@ -179,48 +201,52 @@ class FreeplaySelectorState extends MusicBeatState
 					MusicBeatState.switchState(new MainMenuState());
 				}
 
-
-		if (controls.UI_DOWN_P || (touch.overlaps(_virtualpad.buttonDown) && touch.justPressed))
+				if (controls.UI_DOWN_P || (touch.overlaps(_virtualpad.buttonDown) && touch.justPressed))
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(1);
 				}
 
-
-				menuItems.forEach(function(spr:FlxSprite)
+				if (controls.ACCEPT || (touch.overlaps(_virtualpad.buttonA) && touch.justPressed))
 				{
-					if (curSelected != spr.ID)
-					{
-						FlxTween.tween(spr, {alpha: 0}, 0.4, {
-							ease: FlxEase.quadOut,
-							onComplete: function(twn:FlxTween)
-							{
-								spr.kill();
-							}
-						});
-					}
-					else
-					{
-						FlxTween.tween(FlxG.camera, {zoom: 2.1}, 2, {ease: FlxEase.expoInOut});
-						if (ClientPrefs.shake)
-							FlxG.camera.shake(0.008, 0.08);
+					selectedSomethin = true;
+					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-						if (ClientPrefs.flashing)
+					menuItems.forEach(function(spr:FlxSprite)
+					{
+						if (curSelected != spr.ID)
 						{
-							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-							{
-								MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+							FlxTween.tween(spr, {alpha: 0}, 0.4, {
+								ease: FlxEase.quadOut,
+								onComplete: function(twn:FlxTween)
+								{
+									spr.kill();
+								}
 							});
 						}
 						else
 						{
-							new FlxTimer().start(1, function(tmr:FlxTimer)
+							FlxTween.tween(FlxG.camera, {zoom: 2.1}, 2, {ease: FlxEase.expoInOut});
+							if (ClientPrefs.shake)
+								FlxG.camera.shake(0.008, 0.08);
+
+							if (ClientPrefs.flashing)
 							{
-								MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
-							});
+								FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+								{
+									MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+								});
+							}
+							else
+							{
+								new FlxTimer().start(1, function(tmr:FlxTimer)
+								{
+									MusicBeatState.switchState(new FreeplayState(weeks[curSelected]));
+								});
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		}
 	}
@@ -228,6 +254,43 @@ class FreeplaySelectorState extends MusicBeatState
 	function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
+
+		if (curSelected >= menuItems.length)
+			curSelected = 0;
+		if (curSelected < 0)
+			curSelected = menuItems.length - 1;
+
+		menuItems.forEach(function(spr:FlxSprite)
+		{
+			var newShader:ColorSwap = new ColorSwap();
+			spr.shader = newShader.shader;
+			newShader.brightness = -0.8;
+			spr.setGraphicSize(Std.int(spr.width * 0.55));
+
+			if (spr.ID == curSelected)
+			{
+				spr.shader = null;
+				spr.setGraphicSize(Std.int(spr.width * 0.57));
+				if (ClientPrefs.flashing)
+				{
+					FlxG.camera.flash(FlxColor.BLACK, 0.2, null, true);
+				}
+				// FlxG.camera.flash(FlxColor.BLACK, 0.2);
+				if (spr.ID >= 3)
+				{
+					camFollow.setPosition(700, 1055);
+				}
+				else
+				{
+					camFollow.setPosition(700, 350);
+				}
+			}
+		});
+	}
+	
+	function lolchangeItem(huh:Int)
+	{
+		curSelected = huh;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
