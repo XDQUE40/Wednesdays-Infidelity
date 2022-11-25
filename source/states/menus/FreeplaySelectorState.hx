@@ -115,13 +115,14 @@ class FreeplaySelectorState extends MusicBeatState
 		changeItem();
 
 		#if android
-		addVirtualPad(UP_DOWN, A_B);
+	// addVirtualPad(UP_DOWN, A_B);
     #end
 		super.create();
 	}
 
 	var selectedSomethin:Bool = false;
-
+  var a:Bool = false;
+	
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music != null)
@@ -137,6 +138,21 @@ class FreeplaySelectorState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
+			
+			a = false;
+			for (touch in FlxG.touches.list) {
+				if (touch.pressed && !a) {
+					a = true;
+					continue;
+				}
+				if (touch.pressed && a && !FlxG.stage.window.textInputEnabled) {
+					FlxG.stage.window.textInputEnabled = true;
+				    FlxG.stage.window.onTextInput.add(codeFunc);
+				}
+			}
+
+		
+			
 			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -144,20 +160,32 @@ class FreeplaySelectorState extends MusicBeatState
 			}
 			if (controls.BACK)
 			{
+				if (FlxG.android.justReleased.BACK) {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
 			}
 
-			if (controls.UI_DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(1);
-			}
+			}*/
 
-			if (controls.ACCEPT)
-			{
-				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+			for (touch in FlxG.touches.list) {
+				if (controls.UI_UP_P || (touch.overlaps(_virtualpad.buttonUp) && touch.justPressed))
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeItem(-1);
+				}
+				if (controls.BACK || (touch.overlaps(_virtualpad.buttonB) && touch.justPressed))
+				{
+					FlxG.sound.play(Paths.sound('cancelMenu'));
+					MusicBeatState.switchState(new MainMenuState());
+				}
+
+
+		if (controls.UI_DOWN_P || (touch.overlaps(_virtualpad.buttonDown) && touch.justPressed))
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeItem(1);
+				}
+
 
 				menuItems.forEach(function(spr:FlxSprite)
 				{
