@@ -207,7 +207,7 @@ class FreeplaySelectorState extends MusicBeatState
 					changeItem(1);
 				}
 
-				if (controls.ACCEPT || touch.justPressed))
+				if (controls.ACCEPT || touch.justPressed)
 				{
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
