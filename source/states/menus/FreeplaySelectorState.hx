@@ -165,7 +165,7 @@ class FreeplaySelectorState extends MusicBeatState
 				MusicBeatState.switchState(new MainMenuState());
 			}
 
-			}*/
+			
 
 			for (touch in FlxG.touches.list) {
 				if (controls.UI_UP_P || (touch.overlaps(_virtualpad.buttonUp) && touch.justPressed))
