@@ -190,12 +190,12 @@ class FreeplaySelectorState extends MusicBeatState
 			}*/
 			
 			for (touch in FlxG.touches.list) {
-				if (controls.UI_UP_P || touch.justPressed)
+				if (controls.UI_UP_P)
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					changeItem(-1);
 				}
-				if (controls.BACK || touch.justPressed)
+				if (controls.BACK)
 				{
 					FlxG.sound.play(Paths.sound('cancelMenu'));
 					MusicBeatState.switchState(new MainMenuState());
@@ -207,7 +207,7 @@ class FreeplaySelectorState extends MusicBeatState
 					changeItem(1);
 				}
 
-				if (controls.ACCEPT || touch.justPressed)
+				if (controls.ACCEPT || virtualPad.buttonA.touch.justPressed)
 				{
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
