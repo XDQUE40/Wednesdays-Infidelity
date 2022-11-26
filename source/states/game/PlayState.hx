@@ -2521,7 +2521,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		if (controls.PAUSE && canPause && startedCountdown && !inCutscene)
+		if (controls.PAUSE && canPause && #if android || FlxG.android.justReleased.BACK #end  startedCountdown && !inCutscene)
 		{
 			if (isStoryMode)
 				diablo();
