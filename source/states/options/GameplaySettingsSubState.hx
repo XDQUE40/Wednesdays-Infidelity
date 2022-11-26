@@ -39,9 +39,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'controllerMode', 'bool', false);
 		addOption(option);
 
-		var option:Option = new Option('Noob Mode', 'Turns off Mechanics (skill issue)', 'nubMode', 'bool', false);
-		addOption(option);
-
 		// I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', // Name
 			'If checked, notes go Down instead of Up, simple enough.', // Description
@@ -110,6 +107,10 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		addOption(option);
 
+                #if android
+                addVirtualPad(UP_DOWN, A_B);
+                #end
+		
 		super();
 	}
 }
