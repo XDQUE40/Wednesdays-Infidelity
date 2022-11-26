@@ -42,7 +42,7 @@ class ClientPrefs
 	public static var safeFrames:Float = 10;
 	public static var shaders:Bool = true;
 	public static var intensiveShaders:Bool = false;
-	public static var doNotShowWarnings:Bool = false;
+	public static var doNotShowWarnings:Bool = true;
 	public static var hudStyle:String = "Box Funkin";
 	public static var nubMode:Bool = false;
 
