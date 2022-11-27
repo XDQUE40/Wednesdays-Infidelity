@@ -95,7 +95,7 @@
 	<haxelib name="flxanimate" />
 	<haxelib name="discord_rpc" if="desktop" />
 	<haxelib name="extension-webview"/>
-        <haxelib name= "extension-videoview"if"android"/>
+        <haxelib name="extension-videoview"if="android"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
