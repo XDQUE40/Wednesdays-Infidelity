@@ -62,6 +62,7 @@ jobs:
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib git flixel-addons https://github.com/ninjamuffin99/flixel-addons
           haxelib git flixel https://github.com/MateuzinhoX02/flixel
+          haxelib git extension-videoview https://github.com/MAJigsaw77/extension-videoview
           haxelib list
 
       - name: Create Version Tag
