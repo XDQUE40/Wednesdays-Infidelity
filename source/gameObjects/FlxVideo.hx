@@ -1,6 +1,11 @@
 package gameObjects;
 
 #if web
+#else
+#if android	
+import extension.videoview.VideoView;	
+import android.AndroidTools;
+#end	
 import openfl.events.NetStatusEvent;
 import openfl.media.Video;
 import openfl.net.NetConnection;
